@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Image from "next/image";
 import logo from "./logo.png";
+import StoreProvider from "./StoreProvider";
 
 // Font configurations
 const geistSans = localFont({
@@ -30,7 +31,7 @@ const Header = () => (
       aria-label="Global"
     >
       <div className="flex flex-1">
-        <a href="#" className="flex items-center space-x-2">
+        <a href="/" className="flex items-center space-x-2">
           <Image
             className="h-10 w-10"
             src={logo}
@@ -56,22 +57,20 @@ const Footer = () => (
   </footer>
 );
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Header />
-        <main className="flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 py-8 sm:py-20 w-full">
-          {children}
-        </main>
-        <Footer />
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <StoreProvider>
+          <Header />
+          <main className="flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 py-8 sm:py-20 w-full">
+            {children}
+          </main>
+          <Footer />
+        </StoreProvider>
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
